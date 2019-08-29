@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Swiper demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="css/swiper.min.css">
+
+    <!-- Demo styles -->
+    <style>
+        html, body {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+    </style>
+    <script>
+        var panorama_list;
+        var panorama;
+        var viewer;
+
+        function init_data() {
+            panorama_list = []
+            panorama = new PANOLENS.ImagePanorama('images/skybox/1.jpg');
+            viewer = new PANOLENS.Viewer({output: 'console'});
+        }
+
+        function change_image(path) {
+
+            console.info(path)
+            console.info(panorama_list)
+            panorama = new PANOLENS.ImagePanorama(path);
+            viewer.setPanorama(panorama)
+            for (i = 0; i < panorama_list.length; i++) {
+                viewer.remove(panorama_list[i])
+            }
+            viewer.add(panorama)
+            panorama_list = []
+            panorama_list.push(panorama)
+        }
+    </script>
+</head>
+<body onload="init_data();init_panorama()">
+<!-- Swiper -->
+<div style="position: absolute;bottom: 0;height:20%;width:100%">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img style="width:100%; height:auto" src="images/skybox/1.jpg"
+                     onclick="change_image('images/skybox/1.jpg')"/>
+            </div>
+            <div class="swiper-slide">
+                <img style="width:100%; height:auto" src="images/skybox/2.jpg"
+                     onclick="change_image('images/skybox/2.jpg')"/>
+            </div>
+            <div class="swiper-slide" onclick="change_image('images/skybox/3.jpeg')">
+                <img style="width:100%; height:auto" src="images/skybox/3.jpeg"/>
+            </div>
+            <div class="swiper-slide"><img style="width:100%; height:auto" src="images/skybox/4.jpg"
+                                           onclick="change_image('images/skybox/4.jpg')"/>
+            </div>
+            <div class="swiper-slide"><img style="width:100%; height:auto" src="images/skybox/5.jpg"
+                                           onclick="change_image('images/skybox/5.jpg')"/>
+            </div>
+            <div class="swiper-slide"><img style="width:100%; height:auto" src="images/skybox/6.jpeg"
+                                           onclick="change_image('images/skybox/6.jpeg')"/>
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+
+
+<!-- Swiper JS -->
+<script src="js/swiper.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 4,
+        spaceBetween: 30,
+        centeredSlides: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+</script>
+
+<script src="three.min.js"></script>
+<script src="panolens.min.js"></script>
+<script>
+    function init_panorama() {
+        console.log("init_panorama")
+        viewer.add(panorama);
+        panorama_list.push(panorama)
+    }
+
+</script>
+
+
+</body>
+</html>
